@@ -1,14 +1,22 @@
 import 'package:flutter/material.dart';
 
-class MyAdaptive extends StatelessWidget {
+class MyAdaptive extends StatefulWidget {
   const MyAdaptive({Key? key}) : super(key: key);
+
+  @override
+  State<MyAdaptive> createState() => _MyAdaptiveState();
+}
+
+class _MyAdaptiveState extends State<MyAdaptive> {
+  double _sliderValue = 0.5; // Valor inicial del slider
+  bool _switchValue = true;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Jimenez', // Puedes cambiar este título según necesites
+          'Jimenez',
           style: TextStyle(
             color: Colors.black,
             fontSize: 25.0,
@@ -23,22 +31,40 @@ class MyAdaptive extends StatelessWidget {
             child: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: const [
+                children: [
                   Slider.adaptive(
-                    value: 1,
-                    onChanged: null,
+                    value: _sliderValue,
+                    min: 0,
+                    max: 1,
+                    onChanged: (double newValue) {
+                      setState(() {
+                        _sliderValue = newValue;
+                      });
+                    },
                   ),
                   SwitchListTile.adaptive(
-                    title: Text('Switch List Tile'),
-                    value: true,
-                    onChanged: null,
+                    title: const Text('Switch List Tile'),
+                    value: _switchValue,
+                    onChanged: (bool? newValue) {
+                      setState(() {
+                        if (newValue != null) {
+                          _switchValue = newValue;
+                        }
+                      });
+                    },
                   ),
                   Switch.adaptive(
-                    value: true,
-                    onChanged: null,
+                    value: _switchValue,
+                    onChanged: (bool? newValue) {
+                      setState(() {
+                        if (newValue != null) {
+                          _switchValue = newValue;
+                        }
+                      });
+                    },
                   ),
-                  Icon(Icons.share),
-                  CircularProgressIndicator.adaptive(),
+                  const Icon(Icons.share),
+                  const CircularProgressIndicator.adaptive(),
                 ],
               ),
             ),
